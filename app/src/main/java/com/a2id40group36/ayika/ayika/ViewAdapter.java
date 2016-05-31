@@ -21,16 +21,18 @@ public class ViewAdapter extends FragmentPagerAdapter  {
             case 0:
                 // Top Rated fragment activity
                 return new HomeActivity();
-
+            case 1:
+                return new WeekProgramActivity();
+            case 2:
+                return new SettingsActivity();
         }
-
         return null;
     }
 
     @Override
     public int getCount() {
         // get item count - equal to number of tabs
-        return 1;
+        return 3;
     }
 
 

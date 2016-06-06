@@ -34,7 +34,7 @@ public class drawSlider extends HomeActivity{
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bsliderw);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.bsliderw);
         x = 0;
         y = 0;
 

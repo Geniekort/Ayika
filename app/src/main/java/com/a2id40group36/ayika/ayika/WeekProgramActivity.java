@@ -25,11 +25,5 @@ public class WeekProgramActivity extends Fragment {
     }
 
 
-    public void addCounter(){
-        counter++;
-        Log.d("DEBUG", "C:" + counter);
-
-    }
-
 
 }

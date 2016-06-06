@@ -61,7 +61,7 @@ public class ScheduleView extends View {
     Runnable mLongPressed = new Runnable() {
         public void run() {
             longTouch = true;
-            editState = !editState;
+            editState = true;
         }
     };
 
@@ -233,7 +233,6 @@ public class ScheduleView extends View {
 
             }
         }
-
         invalidate();
         return true;
     }

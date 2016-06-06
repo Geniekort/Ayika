@@ -33,15 +33,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void addCounter(){
-        counter++;
-        Log.d("DEBUG", "C:" + counter);
-
-    }
-
     public int getOne(){
         return 1;
     }
-
 
 }

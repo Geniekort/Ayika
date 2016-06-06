@@ -7,12 +7,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 //
     private ViewPager viewPager;
     ViewAdapter mAdapter;
+    int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,5 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    public void addCounter(){
+        counter++;
+        Log.d("DEBUG", "C:" + counter);
+
+    }
+
+    public int getOne(){
+        return 1;
+    }
+
 
 }

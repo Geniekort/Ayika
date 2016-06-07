@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -48,6 +49,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
                                                         // (Relative to the graph part, so not including the hour labelss)
 
     private final int lineColor = Color.rgb(230,230,230);
+    private final int lightlineColor = Color.argb(160, 230,230,230);
     private final int nightLineColor = Color.argb(155,102,150,186);
     private final int dayLineColor = Color.argb(155,231,165,83);
     private final int nightNodeColor = Color.argb(255,102,150,186);
@@ -129,7 +131,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
 
         //Draw all the hour lines
-        lineDrawer.setColor(lineColor);
+
         lineDrawer.setStrokeWidth(line2Width);
 
         textDrawer.setTextSize(hourLabelTextSize);
@@ -137,10 +139,16 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
         float tempY;
         for(int i = 0; i < 24; i++){
+            lineDrawer.setColor(lineColor);
             tempY = headerHeight + i * hourRowHeight;
             canvas.drawLine(axisX, tempY, width, tempY, lineDrawer);
 
             canvas.drawText(i + ":00", axisX - 5, tempY + hourLabelTextSize/2, textDrawer);
+
+            lineDrawer.setColor(lightlineColor);
+            tempY += .5 * hourRowHeight;
+            canvas.drawLine(axisX, tempY, width, tempY, lineDrawer);
+
         }
 
 

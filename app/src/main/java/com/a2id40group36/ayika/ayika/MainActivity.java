@@ -33,8 +33,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public int getOne(){
-        return 1;
+    public void pauseSwipe(boolean b){
+        Log.d("DEBUG", "Pausing");
+        ((StopViewPager) findViewById(R.id.pager)).setPagingEnabled(b);
     }
+
+    public void pauseScroll(boolean b){
+        Log.d("DEBUG", "Pausing");
+        ((LockableScrollView) findViewById(R.id.scrollViewSchedule)).setScrollingEnabled(b);
+    }
+
+
 
 }

@@ -7,10 +7,10 @@
 
 
 
-    <ScrollView
+    <com.a2id40group36.ayika.ayika.LockableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollViewSchedule"
         android:layout_above="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -24,7 +24,7 @@
             />
 
 
-    </ScrollView>
+    </com.a2id40group36.ayika.ayika.LockableScrollView>
 
     <TextView
         android:layout_width="wrap_content"

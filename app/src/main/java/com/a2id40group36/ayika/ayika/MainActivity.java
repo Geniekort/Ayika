@@ -34,15 +34,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void addCounter(){
-        counter++;
-        Log.d("DEBUG", "C:" + counter);
-
+    public void pauseSwipe(boolean b){
+        Log.d("DEBUG", "Pausing");
+        ((StopViewPager) findViewById(R.id.pager)).setPagingEnabled(b);
     }
 
-    public int getOne(){
-        return 1;
+    public void pauseScroll(boolean b){
+        Log.d("DEBUG", "Pausing");
+        ((LockableScrollView) findViewById(R.id.scrollViewSchedule)).setScrollingEnabled(b);
     }
+
 
 
 }

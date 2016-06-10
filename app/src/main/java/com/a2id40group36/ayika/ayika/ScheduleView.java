@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -16,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.widget.ScrollView;
+import android.os.Vibrator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,12 +37,15 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     private float touchX;
     private float touchY;
     private int[] attachedNode;
+    private float attachedY;
+    private float attachedTime;
     private float attachDist = 100;
 
     private final float moveThreshold = 50;
 
     private final float hourBarPerc = (float) 0.20; //indicates the width of the first column with hours in percentage
     private final float headerBarPerc = 1-hourBarPerc; // the rest of the columns :)
+    private float axisX; //To be set to the real X value of the axis separateing labels and the graph
     private final float hourRowHeight = 200; //height of every hour row in pixels
     private final float headerHeight = 120; //height of header bar in pixels
     float[] linesX;
@@ -54,6 +59,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     private final int dayLineColor = Color.argb(155,231,165,83);
     private final int nightNodeColor = Color.argb(255,102,150,186);
     private final int dayNodeColor = Color.argb(255,231,165,83);
+    private final int dragTimeLabelColor = Color.argb(200,255,10,10);
 
     private final int textColor = Color.WHITE;
 
@@ -62,6 +68,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     private final float graphLineWidth = 10;
     private final float tempLineWidth = 20;
     private final float hourLabelTextSize = 50;
+    private final float hourLabelTextSizeS = 40;
     private final float tempLabelTextSize = 60;
     private final float nodeSize = 40;
 
@@ -142,28 +149,27 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
             lineDrawer.setColor(lineColor);
             tempY = headerHeight + i * hourRowHeight;
             canvas.drawLine(axisX, tempY, width, tempY, lineDrawer);
-
+            textDrawer.setTextSize(hourLabelTextSize);
             canvas.drawText(i + ":00", axisX - 5, tempY + hourLabelTextSize/2, textDrawer);
 
             lineDrawer.setColor(lightlineColor);
             tempY += .5 * hourRowHeight;
+            textDrawer.setTextSize(hourLabelTextSizeS);
             canvas.drawLine(axisX, tempY, width, tempY, lineDrawer);
-
+            canvas.drawText(i + ":30", axisX - 5, tempY + hourLabelTextSizeS/2, textDrawer);
         }
 
 
         int dayNC = 0, nightNC = 0; // NodeCounters, to keep track of which nodes already are drawn
 
         float prevX = -1, prevY = -1;
-        
+        boolean firstNode = true;
+        float nodeY = 0;
+        float nodeX = 0;
+
+
+        //Draw all the nodes and the lines in between
         while(!(dayNC >= dayNodes.size() && nightNC >= nightNodes.size())){
-            while(dayNC < dayNodes.size() && dayNodes.get(dayNC) == -1) dayNC++;
-            while(nightNC < nightNodes.size() && nightNodes.get(nightNC) == -1) nightNC++;
-            
-            float nodeY = 0;
-            float nodeX = 0;
-
-
 
             boolean dayN; //0 = night, 1 = day node has to be drawn
             if(dayNC < dayNodes.size()){
@@ -180,7 +186,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
                 dayN = false;
             }
 
-            lineDrawer.setStyle(Style.FILL);
+
             if(dayN){
                 lineDrawer.setColor(dayNodeColor);
                 nodeX = linesX[1];
@@ -190,13 +196,24 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
                 nodeX = linesX[0];
                 nodeY = headerHeight + nightNodes.get(nightNC++) * hourRowHeight;
             }
-////HIii
+
+            if(firstNode){
+                firstNode = false;
+                lineDrawer.setStyle(Style.FILL_AND_STROKE);
+                lineDrawer.setStrokeWidth(tempLineWidth);
+                lineDrawer.setColor(nightNodeColor);
+                canvas.drawLine(linesX[0], headerHeight, linesX[0], nodeY + tempLineWidth/2, lineDrawer);
+                canvas.drawLine(linesX[0], nodeY, nodeX, nodeY , lineDrawer);
+            }
+
+
             float addX = 0, addY = 0;
             if(editState) {
                 addX = (r.nextFloat() - r.nextFloat()) * r.nextInt(15);
                 addY = (r.nextFloat() - r.nextFloat()) * r.nextInt(15);
                 invalidate();
             }
+            lineDrawer.setStyle(Style.FILL);
             canvas.drawCircle(nodeX + addX, nodeY + addY, nodeSize, lineDrawer);
 
             //Draw a line to the previous node
@@ -207,7 +224,6 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
                 lineDrawer.setStyle(Style.FILL_AND_STROKE);
                 lineDrawer.setStrokeWidth(tempLineWidth);
-
                 canvas.drawLine(prevX, prevY, prevX, nodeY + tempLineWidth/2, lineDrawer);
                 canvas.drawLine(prevX, nodeY, nodeX, nodeY , lineDrawer);
             }
@@ -215,12 +231,32 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
             prevX = nodeX;
             prevY = nodeY;
+
+            while(dayNC < dayNodes.size() && dayNodes.get(dayNC) == -1) dayNC++; // To skip over all undefined nodes
+            while(nightNC < nightNodes.size() && nightNodes.get(nightNC) == -1) nightNC++; // To skip over all undefined nodes
+
         }
-        // If long touched
+
+        if(prevX == linesX[0])
+            lineDrawer.setColor(nightNodeColor);
+        else lineDrawer.setColor(dayNodeColor);
+        // Draw the line to midnight
+        canvas.drawLine(prevX, prevY, prevX, headerHeight+hoursHeight, lineDrawer);
+
+
+
+        // If long touched, and therefore in editstate
         if(editState){
             lineDrawer.setColor(Color.argb(200,255,10,10));
             lineDrawer.setStyle(Style.FILL);
             canvas.drawRect(width - 50, headerHeight, width, headerHeight+hoursHeight, lineDrawer);
+            if(attached){
+                textDrawer.setColor(dragTimeLabelColor);
+                textDrawer.setTextSize(hourLabelTextSize + 20);
+                textDrawer.setFakeBoldText(true);
+                textDrawer.setTextAlign(Paint.Align.RIGHT);
+                canvas.drawText(Math.round(attachedTime) + ":" + (int)((attachedTime % 1)*60), axisX, attachedY + textDrawer.getTextSize()/2, textDrawer );
+            }
         }
     }
 
@@ -339,6 +375,13 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         boolean night = attachedNode[0] == 0;
 
 
+        //Correct the mouseY for the bounds of the graph
+        if(my < headerHeight){
+            my = headerHeight;
+        }else if(my > headerHeight + 24 * hourRowHeight){
+            my = headerHeight + 24 * hourRowHeight;
+        }
+
         newtime = (my - headerHeight)/hourRowHeight;
 
         if(nlinedist < dlinedist){ //if closer to nightline
@@ -364,7 +407,12 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         }else {
             dayNodes.set(attachedNode[1], newtime);
         }
+
+
+        attachedTime = roundForQuarters((my - headerHeight)/hourRowHeight);
+        attachedY = attachedTime * hourRowHeight + headerHeight;
     }
+
     private boolean isNodeCoordinate(float x, float y){
         float nodeY;
 
@@ -388,6 +436,16 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
     }
 
+    private float roundForQuarters(float inp){
+        // Function returns the value rounded to the closest quarter value .25, .75, .50 or .00
+        float t = (float) (inp % 0.25);
+        if(t >= 0.25/2){
+            return (float)(inp + .25 - t);
+        }else{
+            return (float)(inp - t);
+        }
+
+    }
 
     private void addNode(MotionEvent me){
         if(!editState){
@@ -415,14 +473,23 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         if(attachedNode != null){
             attached = true;
             Log.d("DEBUG", attachedNode[0] + "," + attachedNode[1]);
+            attachedY = (float) e.getY();
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent me) {
         if(attached){
-            if(me.getAction() == MotionEvent.ACTION_UP)
+            if(me.getAction() == MotionEvent.ACTION_UP){
                 attached = false;
+                //
+                if(attachedNode[0] == 0){
+                    nightNodes.set(attachedNode[1], attachedTime);
+                }else{
+                    dayNodes.set(attachedNode[1], attachedTime);
+                }
+            }
+
             else{
                 updateAttachedNode(me);
                 sortNodes();
@@ -467,6 +534,8 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
             setEditState(true);
             attachToNode(e);
+            Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(200);
         }
         invalidate();
     }

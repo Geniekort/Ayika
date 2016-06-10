@@ -28,7 +28,7 @@
         android:progressDrawable="@android:color/transparent"
 
 
-        android:thumb="@drawable/hell"
+
 
         android:minHeight="10dip"
         android:maxHeight="10dip"

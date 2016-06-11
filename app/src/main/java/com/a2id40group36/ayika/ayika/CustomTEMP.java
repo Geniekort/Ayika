@@ -15,7 +15,8 @@ import android.widget.TextView;
 public class CustomTEMP extends View {
     private Handler mHandler;
     Canvas canvas;
-
+    HomeActivity home;
+    String day;
 
 
 
@@ -48,6 +49,8 @@ public class CustomTEMP extends View {
     public void init(AttributeSet attrs, int defStyleAttr)
     {
         paint_TEMP.setColor(Color.CYAN);
+        paint_TEMP.setTextSize(150);
+
 
      //   showText.setTextColor(Color.BLUE);
       //  showText.setTextSize(40);
@@ -62,6 +65,8 @@ public class CustomTEMP extends View {
      //   Handler mHandler = new Handler();
       //  mHandler.post(mUpdate);
         canvas.drawText(CustomVS.counter + "°", 230, 270, paint_TEMP);
+
+
         invalidate();
 
 
@@ -74,13 +79,15 @@ public class CustomTEMP extends View {
 
     public void run1(){
 
-        String mwape;
-        showText.setText(""+ CustomVS.counter + "°");
-        showText.setTextColor(Color.CYAN);
-        showText = (TextView) findViewById(R.id.showthisfuckingtext);
-        mwape = String.valueOf(CustomVS.counter);
-        showText.setText(mwape);
-        showText.setTextSize(50);
+
+
+      //  String mwape;
+        //showText.setText(""+ CustomVS.counter + "°");
+        //showText.setTextColor(Color.CYAN);
+        //showText = (TextView) findViewById(R.id.no);
+        //mwape = String.valueOf(CustomVS.counter);
+        //showText.setText(mwape);
+        //showText.setTextSize(50);
     }
 
     public void run(){

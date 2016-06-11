@@ -6,12 +6,16 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Created by Mwape on 08.06.2016.
  */
 public class CustomSL extends View{
-
+TextView textView;
     private Paint paint_SL = new Paint();
     public CustomSL(Context context) {
         super(context);
@@ -33,6 +37,8 @@ public class CustomSL extends View{
         paint_SL.setColor(Color.BLUE);
 
     }
+
+
 
 
 

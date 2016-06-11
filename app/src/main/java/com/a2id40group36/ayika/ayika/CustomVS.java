@@ -74,6 +74,7 @@ public class CustomVS extends SeekBar {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    break;
                 case MotionEvent.ACTION_MOVE:
                 case MotionEvent.ACTION_UP:
                     int i=0;

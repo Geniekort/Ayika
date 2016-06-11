@@ -33,6 +33,7 @@ public class CustomBG extends View {
     public void init(AttributeSet attrs, int defStyleAttr)
     {
         paint_BG.setColor(Color.BLUE);
+        paint_BG.setTextSize(230);
     }
 
 

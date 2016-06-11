@@ -16,7 +16,10 @@
     <com.a2id40group36.ayika.ayika.CustomBG
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
+
+        android:id="@+id/view3" />
 
     <com.a2id40group36.ayika.ayika.CustomSL
         android:layout_width="wrap_content"
@@ -38,14 +41,14 @@
         android:indeterminate="false"
         android:id="@+id/view"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/showthisfuckingtext"
-        android:layout_toEndOf="@+id/showthisfuckingtext"
-        android:layout_marginLeft="58dp"
-        android:layout_marginStart="58dp" />
+        android:layout_toRightOf="@+id/no"
+        android:layout_toEndOf="@+id/no"
+        android:layout_marginLeft="108dp"
+        android:layout_marginStart="108dp" />
         />
 
 <TextView
-    android:id="@+id/showthisfuckingtext"
+    android:id="@+id/no"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@android:color/holo_blue_dark"
@@ -58,16 +61,68 @@
     android:layout_marginTop="59dp"
     />
 <com.a2id40group36.ayika.ayika.CustomTEMP
-    android:layout_width="230dp"
-    android:layout_height="230dp"
-   android:scaleX="5"
-    android:scaleY="5"
+    android:layout_width="290dp"
+    android:layout_height="290dp"
+    android:id="@+id/view2"
+    android:layout_below="@+id/no"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
 
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:src="@drawable/settings"
+        android:background="@android:color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/view"
+        android:layout_alignStart="@+id/view" />
 
-    />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:src="@drawable/house"
+        android:background="@android:color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/view2"
+        android:layout_toEndOf="@+id/view2" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton3"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/help"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/black"/>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton4"
+        android:src="@drawable/plane"
+        android:background="@android:color/black"
+        android:layout_alignTop="@+id/imageButton3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
+
+    <TextView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/view3"
+        android:layout_alignStart="@+id/view3" />
 
 
 

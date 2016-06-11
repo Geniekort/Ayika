@@ -65,6 +65,7 @@ public class CustomVS extends SeekBar {
         @Override
         public boolean onTouchEvent(MotionEvent event) {
 
+
             if (!isEnabled()) {
                 bar.setProgress(200);
                 return false;
@@ -93,10 +94,17 @@ public class CustomVS extends SeekBar {
                     break;
 
                 case MotionEvent.ACTION_CANCEL:
+                    i = 400;
+                    setProgress(i);
+
                     break;
+
             }
             return true;
         }
+
+
+
 
 
 

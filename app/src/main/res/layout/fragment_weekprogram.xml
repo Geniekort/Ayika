@@ -6,26 +6,6 @@
 
 
 
-
-    <com.a2id40group36.ayika.ayika.LockableScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollViewSchedule"
-        android:layout_above="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:padding="10dp"
-        android:layout_below="@+id/textView3">
-
-        <com.a2id40group36.ayika.ayika.ScheduleView
-            android:id="@+id/scheduler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
-
-    </com.a2id40group36.ayika.ayika.LockableScrollView>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,5 +26,100 @@
         android:layout_below="@+id/textView2"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2" />
+
+
+
+   <FrameLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/textView3"
+       android:id="@+id/dayButtons">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textView3"
+            >
+
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mo"
+                android:id="@+id/buttonmo"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tu"
+                android:id="@+id/buttontu"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="We"
+                android:id="@+id/buttonwe"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Th"
+                android:id="@+id/buttonth"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fr"
+                android:id="@+id/buttonfr"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sa"
+                android:id="@+id/buttonsa"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Su"
+                android:id="@+id/buttonsu"
+                />
+
+
+        </LinearLayout>
+   </FrameLayout>
+
+    <com.a2id40group36.ayika.ayika.LockableScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollViewSchedule"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="10dp"
+        android:layout_below="@+id/dayButtons">
+
+        <com.a2id40group36.ayika.ayika.ScheduleView
+            android:id="@+id/scheduler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+    </com.a2id40group36.ayika.ayika.LockableScrollView>
+
+
 
 </RelativeLayout>

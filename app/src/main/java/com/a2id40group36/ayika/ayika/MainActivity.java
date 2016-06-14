@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
     ViewAdapter mAdapter;
     int counter = 0;
 
+    private float[][][] switchPoints = new float[7][2][5]; //7 days, 2 possible states, 5 switches
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

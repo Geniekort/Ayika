@@ -29,7 +29,10 @@ public static TextView textView;
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
+
+
         return rootView;
+
 
 
 

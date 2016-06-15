@@ -36,6 +36,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     private GestureDetector gDetector;
     private final Paint lineDrawer, textDrawer;
     private int counter;
+    private int currentDay;
 
     private final String tooMuchNodesMsg = "Sorry, you can only have five nodes for the night temperature line, and five nodes for the day temperature line. Please first delete a node";
     private final String nodeDeletedMsg = "A node was deleted!";
@@ -61,6 +62,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     float[] linesX;
     float deleteX, deleteWidth = 50;
 
+    private Toast t;
 
     private final float nightDayLinesDist = (float)0.47; // The relative distance of between the day and night lines.
                                                         // (Relative to the graph part, so not including the hour labelss)
@@ -112,6 +114,65 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         thrDel = false;
         thrTime = -1;
         attachedNode = new int[2]; //0 is for night/day node, 1 is for index in that row of nodes
+
+        currentDay = 0;//Always start this view on sunday
+    }
+
+    // Method for updating the nodes to another day
+    public void changeDay(float[][] nodes, int day){
+
+        ArrayList<Float> tempList = new ArrayList<Float>();
+
+        currentDay = day; //Just to match the day with its nodes
+
+        for(int i = 0; i < nodes[0].length; i++){
+            if(nodes[0][i] != -1){
+                tempList.add(nodes[0][i]);
+            }
+        }
+
+        nightNodes = tempList; //Here all the nightnodes are set to the new day
+
+        tempList = new ArrayList<Float>(); //Reset the temporary list
+
+        for(int i = 0; i < nodes[1].length; i++){
+            if(nodes[1][i] != -1){
+                tempList.add(nodes[1][i]);
+            }
+        }
+
+        dayNodes = tempList; //Here all the daynodes are set to the new day
+
+        sortNodes(); // Just to make sure the nodes are in the right order
+
+        invalidate();
+        return;
+    }
+
+    // Method to put the nodes as they are right now to the main Activity
+    private void putNodes(){
+
+        float[][] nodeArray = new float[2][5];
+
+        for(int i = 0; i < nodeArray[0].length; i++){
+            if(i < nightNodes.size()){
+                nodeArray[0][i] = nightNodes.get(i);
+            }else{
+                nodeArray[0][i] = -1;
+            }
+        }
+
+        for(int i = 0; i < nodeArray[1].length; i++){
+            if(i < dayNodes.size()){
+                nodeArray[1][i] = dayNodes.get(i);
+            }else{
+                nodeArray[1][i] = -1;
+            }
+        }
+
+        m.updateSwitches(nodeArray, currentDay);
+        return;
+
     }
 
     @Override
@@ -298,9 +359,9 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     private void sortNodes(){
         float attachedValue = -1;
         if(attachedNode != null){
-            if(attachedNode[0] == 0){
+            if(attachedNode[0] == 0 && nightNodes.size() > attachedNode[1]){
                 attachedValue = nightNodes.get(attachedNode[1]);
-            }else if(attachedNode[0] == 1){
+            }else if(attachedNode[0] == 1 && dayNodes.size() > attachedNode[1]){
                 attachedValue = dayNodes.get(attachedNode[1]);
             }
         }
@@ -388,7 +449,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         setMeasuredDimension(width,(int) (24 * hourRowHeight + headerHeight));
     }
 
-    public void setEditState(boolean b){
+    private void setEditState(boolean b){
         if(b){
             editState = true;
             m.pauseSwipe(false);
@@ -398,16 +459,18 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         }
     }
 
-    public void setAttachState(boolean b){
-        if(b){
+    private void setAttachState(boolean b){
+        if(b){ //Get attached
             attached = true;
             m.pauseScroll(false);
-        }else{
+        }else{ //Get unattached
+            putNodes(); //To store the current (edited) nodesettings
             attached = false;
             m.pauseScroll(true);
+
         }
     }
-    public void updateAttachedNode(MotionEvent me){
+    private void updateAttachedNode(MotionEvent me){
         float newx, newtime;
         float mx = me.getX(), my = me.getY();
         float nlinedist = Math.abs(mx - linesX[0]); //Absolute distance from touch to nightline
@@ -530,13 +593,14 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
         return smalind;
     }
+
     private void addNode(MotionEvent me){
         if(!editState){
             float mx = me.getX(), my = me.getY();
             float nlinedist = Math.abs(mx - linesX[0]); //Absolute distance from touch to nightline
             float dlinedist = Math.abs(mx - linesX[1]); //Absolute distance from touch to nightline
 
-            float newtime = (my - headerHeight)/hourRowHeight;
+            float newtime = roundForQuarters((my - headerHeight)/hourRowHeight);
             boolean noNodeAdd = false;
 
             if(nlinedist < dlinedist && nlinedist < attachDist){
@@ -546,7 +610,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
                     noNodeAdd = true;
                 }
             }else if( dlinedist < attachDist) {
-                if(nightNodes.size() < 5){
+                if(dayNodes.size() < 5){
                     dayNodes.add(newtime);
                 }else{
                     noNodeAdd = true;
@@ -554,11 +618,14 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
             }
 
             if(noNodeAdd){
-                Toast t = Toast.makeText(m.getApplicationContext(), tooMuchNodesMsg, Toast.LENGTH_LONG);
-                t.show();
+                if(t == null || t.getView().getWindowVisibility() != View.VISIBLE){ // Only if toast was already invisible
+                    t = Toast.makeText(m.getApplicationContext(), tooMuchNodesMsg, Toast.LENGTH_LONG);
+                    t.show();
+                }
             }
 
             sortNodes();
+            putNodes(); //To store the current (edited) nodesettings
             invalidate();
         }
 

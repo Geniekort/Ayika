@@ -51,6 +51,7 @@ class LockableScrollView extends ScrollView {
         // we are not scrollable
 
 
+
         if (!mScrollable) return false;
         else return super.onInterceptTouchEvent(ev);
     }

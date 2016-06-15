@@ -9,16 +9,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
 import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.InvalidInputValueException;
+import org.thermostatapp.util.Switch;
+import org.thermostatapp.util.WeekProgram;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 //
-    HeatingSystem h;
+
 
     private ViewPager viewPager;
     ViewAdapter mAdapter;
@@ -48,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        h = new HeatingSystem();
 
     }
 
@@ -71,7 +75,65 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateSwitches(float[][] newSwitches, int day){
         switchPoints[day] = newSwitches;
+        updateServerWeekProgram();
         return;
     }
+
+    private void updateServerWeekProgram(){
+        new Thread(new Runnable() {
+            public void run() {
+
+                WeekProgram w = new WeekProgram();
+
+                for(int i = 0; i < 7; i++){
+                    String day = getDay(i);
+
+                    for(int j = 0; j < 2; j++){
+                        for(int k = 0; k < 5; k++){
+                            String time;
+                            if(switchPoints[i][j][k] != -1){
+                                time = ((int)Math.floor(switchPoints[i][j][k]) < 10 ?
+                                        "0" + (int)Math.floor(switchPoints[i][j][k]) : (int)Math.floor(switchPoints[i][j][k])) +
+                                        ":" +
+                                        ((int)((switchPoints[i][j][k] % 1)*60) == 0 ?
+                                                "00" : (int)((switchPoints[i][j][k] % 1)*60));
+                            }else time = "00:00";
+
+                            //Log.d("Debug", "Switchno: " + ((5 * j) + k ));
+                            w.data.get(day).set((5 * j) + k, new Switch((j==0 ? "night" : "day"), !(switchPoints[i][j][k] == -1), time));
+                        }
+                    }
+
+
+                }
+                HeatingSystem.setWeekProgram(w);
+
+            }
+        }).start();
+    }
+
+
+    private String getDay(int day){
+        switch(day){
+            case 0:
+                return "Sunday";
+            case 1:
+                return "Monday";
+            case 2:
+                return "Tuesday";
+            case 3:
+                return "Wednesday";
+            case 4:
+                return "Thursday";
+            case 5:
+                return "Friday";
+            case 6:
+                return "Saturday";
+        }
+        return null;
+    }
+
+
+
 
 }

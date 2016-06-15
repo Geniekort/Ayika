@@ -6,6 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.InvalidInputValueException;
+import org.thermostatapp.util.WeekProgram;
+
 /**
  * Created by D Kortleven on 15/06/2016.
  * Class to deal with the buttons in the weekProgram Fragment
@@ -42,6 +46,8 @@ public class dayButtonHandeler implements View.OnClickListener {
 
     @Override
     public void onClick(View v){
+
+
 
         if(!buttonsSet){
             buttonsSet = true;

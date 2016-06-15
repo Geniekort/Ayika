@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 public class WeekProgramActivity extends Fragment {
 
@@ -38,7 +39,8 @@ public class WeekProgramActivity extends Fragment {
         float[][] x = {{-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1}};
         ((ScheduleView) rootView.findViewById(R.id.scheduler)).changeDay(x, 0);
 
-
+        ((EditText)rootView.findViewById(R.id.nightTempField)).addTextChangedListener((MainActivity)getActivity());
+        ((EditText)rootView.findViewById(R.id.dayTempField)).addTextChangedListener((MainActivity)getActivity());
         return rootView;
     }
 

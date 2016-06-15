@@ -25,8 +25,8 @@ import android.util.Xml;
 
 public class HeatingSystem {
 
-    public static String BASE_ADDRESS = "";
-    public static String WEEK_PROGRAM_ADDRESS = "";
+    public static String BASE_ADDRESS = "http://wwwis.win.tue.nl/2id40-ws/ayika";
+    public static String WEEK_PROGRAM_ADDRESS = "http://wwwis.win.tue.nl/2id40-ws/ayika/weekProgram";
     private final static int TIME_OUT = 10000; // in milliseconds.
 
     /**
@@ -309,6 +309,8 @@ public class HeatingSystem {
                     "Invalid Value for temperature syntax: " + temperature);
         }
     }
+
+
 
     /**
      * Upload data to the server, everything except for weekProgram

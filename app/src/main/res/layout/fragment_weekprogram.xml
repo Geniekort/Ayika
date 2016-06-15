@@ -80,6 +80,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="0dp"
                 android:layout_centerHorizontal="true"
+                android:textColor="#FFF"
                 android:backgroundTint="@android:color/background_light"
                 android:textCursorDrawable="@null"/>
             <TextView

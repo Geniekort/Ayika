@@ -44,6 +44,9 @@ public class dayButtonHandeler implements View.OnClickListener {
         }
     }
 
+
+
+
     @Override
     public void onClick(View v){
 
@@ -58,7 +61,14 @@ public class dayButtonHandeler implements View.OnClickListener {
         int day = getDay(v.getId());
 
         ((ScheduleView) m.findViewById(R.id.scheduler)).changeDay(m.getNodesForDay(day), day);
+        ((ScheduleView) m.findViewById(R.id.scheduler)).getNodesFromServer();
 
+        highlightButton(day);
+
+
+    }
+
+    public void highlightButton(int day){
         for(int i = 0; i < bs.length; i++){
             if(i == day){
                 bs[i].setBackgroundColor(MainActivity.dayButtonBackgroundColorS);
@@ -66,7 +76,6 @@ public class dayButtonHandeler implements View.OnClickListener {
                 bs[i].setBackgroundColor(MainActivity.dayButtonBackgroundColor);
             }
         }
-
 
     }
 

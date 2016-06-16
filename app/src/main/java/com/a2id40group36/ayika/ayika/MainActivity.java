@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
 
+
     }
 
 
@@ -71,6 +72,40 @@ public class MainActivity extends AppCompatActivity{
 
     public float[][] getNodesForDay(int day){
         return switchPoints[day];
+    }
+
+    // Get all the switches from the server and return the switches for the day on input
+    public float[][] getSwitchesFromServer(int day){
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    WeekProgram w = HeatingSystem.getWeekProgram();
+
+                    for(int i = 0; i < 7; i++) {
+                        String day = getDay(i);
+                        for (int j = 0; j < 2; j++) {
+                            for (int k = 0; k < 5; k++) {
+                                Switch s = w.data.get(day).get((5 * j) + k);
+                                int type = s.getType().equals("day") ? 1 : 0;
+                                float time = s.getTimeFloat();
+                                switchPoints[i][type][k] = time;
+                            }
+                        }
+                    }
+
+                }catch(Exception e){
+                    Log.d("ERROR", "Oops something went wrong: " + e.getMessage());
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        }catch(Exception e){
+            Log.d("ERROR", "Ik was te ongeduldig");
+        }
+
+        return getNodesForDay(day);
     }
 
     public void updateSwitches(float[][] newSwitches, int day){
@@ -99,7 +134,7 @@ public class MainActivity extends AppCompatActivity{
                                                 "00" : (int)((switchPoints[i][j][k] % 1)*60));
                             }else time = "00:00";
 
-                            //Log.d("Debug", "Switchno: " + ((5 * j) + k ));
+                            Log.d("Debug", "time: " + time);
                             w.data.get(day).set((5 * j) + k, new Switch((j==0 ? "night" : "day"), !(switchPoints[i][j][k] == -1), time));
                         }
                     }
@@ -107,8 +142,14 @@ public class MainActivity extends AppCompatActivity{
 
                 }
                 HeatingSystem.setWeekProgram(w);
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((ScheduleView)findViewById(R.id.scheduler)).invalidateMe();
+                    }
+                });
             }
+
         }).start();
     }
 

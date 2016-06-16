@@ -4,6 +4,8 @@
  */
 package org.thermostatapp.util;
 
+import android.util.Log;
+
 public class Switch {
     public String type;
     public boolean state;
@@ -60,6 +62,14 @@ public class Switch {
 
     public String getTime() {
         return this.time;
+    }
+
+    public float getTimeFloat(){
+
+        float f = time_int;
+        if(f == 0) return -1;
+        float returnVal =(float)(Math.floor(f/100) + ((f/100)-Math.floor(f/100)));
+        return returnVal;
     }
 
     public int getTime_Int() {

@@ -115,7 +115,8 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         thrTime = -1;
         attachedNode = new int[2]; //0 is for night/day node, 1 is for index in that row of nodes
 
-        currentDay = 0;//Always start this view on sunday
+        currentDay = 1;//Always start this view on sunday
+        getNodesFromServer();
     }
 
     // Method for updating the nodes to another day
@@ -173,6 +174,13 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
         m.updateSwitches(nodeArray, currentDay);
         return;
 
+    }
+
+    //Get all the nodes from the server as they currently are
+    public void getNodesFromServer(){
+        changeDay(m.getSwitchesFromServer(currentDay), currentDay);
+        invalidate();
+        return;
     }
 
     @Override
@@ -470,6 +478,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
 
         }
     }
+
     private void updateAttachedNode(MotionEvent me){
         float newx, newtime;
         float mx = me.getX(), my = me.getY();
@@ -648,8 +657,10 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
                 setAttachState(false);
                 if(thrDel){
                     thrDel = false;
-                    Toast t = Toast.makeText(m.getApplicationContext(), nodeDeletedMsg, Toast.LENGTH_LONG);
-                    t.show();
+                    if(t == null || t.getView().getWindowVisibility() != View.VISIBLE) { // Only if toast was already invisible
+                        Toast t = Toast.makeText(m.getApplicationContext(), nodeDeletedMsg, Toast.LENGTH_LONG);
+                        t.show();
+                    }
                 }
                 //
                 if(attachedNode[0] == 0){
@@ -719,4 +730,7 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
     }
 
 
+    public void invalidateMe(){
+            super.invalidate();
+    }
 }

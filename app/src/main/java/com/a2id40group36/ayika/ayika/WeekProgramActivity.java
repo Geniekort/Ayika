@@ -17,7 +17,7 @@ public class WeekProgramActivity extends Fragment {
 
     dayButtonHandeler d;
     int counter = 0;
-
+    ScheduleView s;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,11 +36,11 @@ public class WeekProgramActivity extends Fragment {
         rootView.findViewById(R.id.buttonsa).setOnClickListener(d);
         rootView.findViewById(R.id.buttonsu).setOnClickListener(d);
 
-        float[][] x = {{-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1}};
-        ((ScheduleView) rootView.findViewById(R.id.scheduler)).changeDay(x, 0);
+        EditText f = (EditText)rootView.findViewById(R.id.nightTempField);
+        f.addTextChangedListener(new TempFieldHandeler(f));
+        f = (EditText)rootView.findViewById(R.id.dayTempField);
+        f.addTextChangedListener(new TempFieldHandeler(f));
 
-        ((EditText)rootView.findViewById(R.id.nightTempField)).addTextChangedListener((MainActivity)getActivity());
-        ((EditText)rootView.findViewById(R.id.dayTempField)).addTextChangedListener((MainActivity)getActivity());
         return rootView;
     }
 
@@ -49,7 +49,7 @@ public class WeekProgramActivity extends Fragment {
     public void onActivityCreated(Bundle savedInstanceType) {
         super.onActivityCreated(savedInstanceType);
         d.getButtons();
-
+        d.highlightButton(1);
     }
 
 }

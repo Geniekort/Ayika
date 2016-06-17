@@ -37,9 +37,9 @@ public class WeekProgramActivity extends Fragment {
         rootView.findViewById(R.id.buttonsu).setOnClickListener(d);
 
         EditText f = (EditText)rootView.findViewById(R.id.nightTempField);
-        f.addTextChangedListener(new TempFieldHandeler(f));
+        f.setOnFocusChangeListener(new TempFieldHandeler(f));
         f = (EditText)rootView.findViewById(R.id.dayTempField);
-        f.addTextChangedListener(new TempFieldHandeler(f));
+        f.setOnFocusChangeListener(new TempFieldHandeler(f));
 
         return rootView;
     }

@@ -5,40 +5,105 @@
     android:orientation="vertical">
 
 
+<ImageButton
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:src="@drawable/helpblack"
+    android:layout_alignParentRight="true"
+    android:background="#000"
+    android:layout_margin="12dp"
+    android:scaleType="fitCenter"
+    />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
+        android:text="Schedule"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="50dp"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true"
+        android:textAlignment="center"
+        style="@style/TextColor"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2" />
+        android:layout_below="@id/textView2"
+        android:id="@+id/tempFields">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextColor"
+                android:text="Night:"/>
+            <EditText
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/nightTempField"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="#FFF"
+                android:backgroundTint="@android:color/background_light"
+                android:textCursorDrawable="@null"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextColor"
+                android:text="° C"
+                android:layout_marginRight="10dp"/>
 
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextColor"
+                android:text="Day:"/>
+            <EditText
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:id="@+id/dayTempField"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="0dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#FFF"
+                android:backgroundTint="@android:color/background_light"
+                android:textCursorDrawable="@null"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextColor"
+                android:layout_marginRight="10dp"
+                android:text="° C"/>
+            </LinearLayout>
+    </FrameLayout>
 
    <FrameLayout
-       android:layout_width="wrap_content"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_below="@id/textView3"
+       android:layout_below="@id/tempFields"
        android:id="@+id/dayButtons">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/textView3"
+            android:layout_below="@id/tempFields"
+            android:textAlignment="center"
+            android:gravity="center"
             >
 
 
@@ -48,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="Mo"
                 android:id="@+id/buttonmo"
+
                 />
 
             <Button
@@ -119,6 +185,7 @@
 
 
     </com.a2id40group36.ayika.ayika.LockableScrollView>
+
 
 
 

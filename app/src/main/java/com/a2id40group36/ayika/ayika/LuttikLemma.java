@@ -89,13 +89,22 @@ public class LuttikLemma extends ImageButton implements View.OnClickListener{
     public void onClick(View v) {
         this.v = v;
         button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
                 m = (MainActivity) getContext();
                 Toast toast = Toast.makeText(m.getApplicationContext(), DJBASLUTTIK + " current set temperature for this mode is:"+CustomVS.mTrick+"°", Toast.LENGTH_SHORT);
                 toast.show();
 
-            }
+
+                    m = (MainActivity) getContext();
+                     toast = Toast.makeText(m.getApplicationContext(), DJBASLUTTIK2 + " current set temperature for this mode is:" + CustomVS.mTrick + "°", Toast.LENGTH_SHORT);
+
+
+
+    }
+
 
 
         });

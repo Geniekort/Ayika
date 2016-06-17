@@ -42,11 +42,13 @@ public class CustomBG extends View {
     public void onDraw(Canvas canvas){
         super.onDraw(canvas);
        // canvas.drawLine(0,0,getHeight(),getWidth(), paint_BG);
-        BG = BitmapFactory.decodeResource(getResources(), R.mipmap.fslider);
+        BG = BitmapFactory.decodeResource(getResources(), R.mipmap.backsll);
         canvas.drawBitmap(BG, 400, 250, paint_BG);
 
 
+
     }
+
 
 
 

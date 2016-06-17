@@ -16,8 +16,9 @@
     <com.a2id40group36.ayika.ayika.CustomBG
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="23dp"
 
         android:id="@+id/view3" />
 
@@ -27,25 +28,23 @@
 
     <com.a2id40group36.ayika.ayika.CustomVS
         android:layout_width="260dp"
-
         android:progressDrawable="@android:color/transparent"
-
-
-
-
         android:minHeight="10dip"
+        android:thumb="@drawable/updatedslider"
         android:maxHeight="10dip"
         android:layout_height="289dp"
-        android:max="400"
-        android:progress="199"
+        android:max="300"
+        android:progress="150"
         android:indeterminate="false"
         android:id="@+id/view"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/no"
         android:layout_toEndOf="@+id/no"
         android:layout_marginLeft="108dp"
-        android:layout_marginStart="108dp" />
+        android:layout_marginStart="108dp"
+
         />
+
 
 <TextView
     android:id="@+id/no"
@@ -61,38 +60,32 @@
     android:layout_marginTop="59dp"
     />
 <com.a2id40group36.ayika.ayika.CustomTEMP
-    android:layout_width="290dp"
-    android:layout_height="290dp"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
     android:id="@+id/view2"
     android:layout_below="@+id/no"
     android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true" />
+    android:layout_alignParentStart="true"
+    android:layout_marginLeft="1dp"
+    android:layout_marginStart="1dp"/>
 
 
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/settings"
-        android:background="@android:color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/imageButton2"
-        android:layout_toStartOf="@+id/imageButton2"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp" />
+
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton2"
-        android:src="@drawable/house"
+        android:src="@drawable/home"
         android:background="@android:color/black"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/view2"
         android:layout_alignEnd="@+id/view2"
         android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp" />
+        android:layout_marginEnd="50dp"
+        />
+
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -101,13 +94,19 @@
         android:layout_marginRight="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/help"
+        android:src="@drawable/helpblack"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@android:color/black"/>
 
-    <ImageButton
+
+
+
+
+
+
+    <com.a2id40group36.ayika.ayika.LuttikLemma
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton4"
@@ -119,10 +118,15 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp" />
 
+    <com.a2id40group36.ayika.ayika.CustomDay
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
 
 
-<com.a2id40group36.ayika.ayika.CustomDay
-    android:layout_width="300dp"
-    android:layout_height="300dp" />
+
+
+
 
 </RelativeLayout>

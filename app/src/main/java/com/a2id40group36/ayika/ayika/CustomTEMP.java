@@ -48,8 +48,8 @@ public class CustomTEMP extends View {
 
     public void init(AttributeSet attrs, int defStyleAttr)
     {
-        paint_TEMP.setColor(Color.CYAN);
-        paint_TEMP.setTextSize(150);
+        paint_TEMP.setColor(Color.WHITE);
+        paint_TEMP.setTextSize(120);
 
 
      //   showText.setTextColor(Color.BLUE);
@@ -62,53 +62,15 @@ public class CustomTEMP extends View {
     public void onDraw(final Canvas canvas){
         super.onDraw(canvas);
         this.canvas = canvas;
+
      //   Handler mHandler = new Handler();
       //  mHandler.post(mUpdate);
-        canvas.drawText(CustomVS.counter + "°", 230, 270, paint_TEMP);
-
+      //  canvas.drawText(CustomVS.counter + "°", 230, 270, paint_TEMP);
+        canvas.drawText(CustomVS.mTrick+ "°", 230, 270, paint_TEMP);
 
         invalidate();
 
 
-
-
-
-
-
     }
-
-    public void run1(){
-
-
-
-      //  String mwape;
-        //showText.setText(""+ CustomVS.counter + "°");
-        //showText.setTextColor(Color.CYAN);
-        //showText = (TextView) findViewById(R.id.no);
-        //mwape = String.valueOf(CustomVS.counter);
-        //showText.setText(mwape);
-        //showText.setTextSize(50);
-    }
-
-    public void run(){
-        run1();
-    }
-
-  /*  Runnable mUpdate = new Runnable() {
-
-
-        public void run() {
-
-            canvas.drawText("Secret Text"+counter + "°", 300, 300, paint_TEMP);
-
-            counter++; // incrementing the value
-
-            mHandler.postDelayed(this, 60);
-            invalidate();
-        }
-    }*/;
-
-
-
 
 }

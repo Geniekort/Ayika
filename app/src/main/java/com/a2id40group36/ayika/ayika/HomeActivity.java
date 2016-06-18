@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.thermostatapp.util.HeatingSystem;
 
@@ -111,6 +112,9 @@ public class HomeActivity extends Fragment implements View.OnClickListener {
 
                             ((ImageButton) v).setImageBitmap(bb);
 
+                            ((ToggleButton)getActivity().findViewById(R.id.scheduleOnOffButton)).setEnabled(!holiday);
+
+
                             if(t != null && t.getView().getWindowVisibility() == View.VISIBLE){
                                 t.cancel();
                             }
@@ -149,5 +153,6 @@ public class HomeActivity extends Fragment implements View.OnClickListener {
 
         ((ThrottleSlider)getActivity().findViewById(R.id.throttle)).activated = !b;
         ((ThrottleSlider)getActivity().findViewById(R.id.throttle)).invalidate();
+
     }
 }

@@ -67,17 +67,14 @@
         android:layout_alignParentStart="true" />
 
 <com.a2id40group36.ayika.ayika.CustomButtons
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
     android:id="@+id/settingshelp"
     android:src="@drawable/helpblack"
     android:background="@android:color/black"
-    android:layout_alignTop="@+id/helpme"
-    android:layout_alignLeft="@+id/helpme"
-    android:layout_alignStart="@+id/helpme"
-    android:layout_alignBottom="@+id/helpme"
-    android:layout_alignRight="@+id/helpme"
-    android:layout_alignEnd="@+id/helpme" />
+    android:layout_alignParentRight="true"
+    android:layout_margin="12dp"
+    android:scaleType="fitCenter"/>
 
 
 

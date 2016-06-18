@@ -4,20 +4,34 @@ package com.a2id40group36.ayika.ayika;
  * Created by D Kortleven on 30/05/2016.
  */
 
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
-public class WeekProgramActivity extends Fragment {
+import org.thermostatapp.util.HeatingSystem;
+import org.thermostatapp.util.InvalidInputValueException;
+
+import java.net.ConnectException;
+
+public class WeekProgramActivity extends Fragment implements View.OnClickListener {
 
 
     dayButtonHandeler d;
     int counter = 0;
     ScheduleView s;
+    boolean activated;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,6 +55,9 @@ public class WeekProgramActivity extends Fragment {
         f = (EditText)rootView.findViewById(R.id.dayTempField);
         f.setOnFocusChangeListener(new TempFieldHandeler(f));
 
+        ToggleButton tb = (ToggleButton) rootView.findViewById(R.id.scheduleOnOffButton);
+        tb.setOnClickListener(this);
+
         return rootView;
     }
 
@@ -63,4 +80,25 @@ public class WeekProgramActivity extends Fragment {
     }
 
 
+    @Override
+    public void onClick(final View v) {
+        if(v.getId() == R.id.scheduleOnOffButton){
+            final boolean b = ((ThrottleSlider)getActivity().findViewById(R.id.throttle)).activated;
+            if(b){
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            HeatingSystem.put("weekProgramState", ((ToggleButton) v).isChecked() ? "on" : "off");
+                        } catch (InvalidInputValueException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }).start();
+
+            }
+        }
+    }
 }

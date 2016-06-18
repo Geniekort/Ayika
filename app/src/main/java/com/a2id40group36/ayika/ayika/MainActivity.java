@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+
 import org.thermostatapp.util.HeatingSystem;
 import org.thermostatapp.util.InvalidInputValueException;
 import org.thermostatapp.util.Switch;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
         mAdapter = new ViewAdapter(getSupportFragmentManager());
 
         viewPager.setAdapter(mAdapter);
+        viewPager.setCurrentItem(1);
 
         for(int i = 0; i < switchPoints.length; i++){
             for(int j = 0; j < switchPoints[i].length; j++){

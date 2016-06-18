@@ -26,7 +26,8 @@ public class WeekProgramActivity extends Fragment {
 
 
 
-        d = new dayButtonHandeler(this);
+        d = new dayButtonHandeler((MainActivity)this.getActivity());
+
         rootView.findViewById(R.id.buttonmo).setOnClickListener(d);
         rootView.findViewById(R.id.buttontu).setOnClickListener(d);
         rootView.findViewById(R.id.buttonwe).setOnClickListener(d);
@@ -50,5 +51,16 @@ public class WeekProgramActivity extends Fragment {
         d.getButtons();
         d.highlightButton(1);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getActivity() != null) {
+            Log.d("DEBUG", "WEEKPROGRAMVIS: ");
+            ((Indicator) getActivity().findViewById(R.id.indicator)).state = 2;
+            ((Indicator)getActivity().findViewById(R.id.indicator)).invalidate();
+        }
+    }
+
 
 }

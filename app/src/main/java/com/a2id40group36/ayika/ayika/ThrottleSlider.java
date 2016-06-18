@@ -14,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import org.thermostatapp.util.HeatingSystem;
+
 /**
  * Created by D Kortleven on 17/06/2016.
  */
@@ -25,7 +27,7 @@ public class ThrottleSlider extends View {
     private TemperatureChangeThread runnab;
     private Thread thr;
 
-    public boolean tempChanging, tempChCommand;
+    public boolean tempChanging, stopThreadPlease, dayUpdated = false;
     public float currentChange; // Should be a number between -1.0 and 1.0. Indicating the rate of change
 
     public Bitmap b;
@@ -52,10 +54,26 @@ public class ThrottleSlider extends View {
         handleWidth = b.getWidth() + 25;
         handleHeight = 50;
         currentChange = 0;
-        sliderTemperature = 18;
 
         tempChanging = false;
+        stopThreadPlease = false;
         runnab = null; //IT IS INITIALIZED FIRST TIME NEEDED!
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sliderTemperature = (float) Double.parseDouble(HeatingSystem.get("targetTemperature"));
+                }catch(Exception e){
+                    Log.d("ERROR", "initialize: " + e.getMessage());
+                }
+            }
+        }).start();
+
+        if(sliderTemperature > 30 || sliderTemperature < 5){
+            sliderTemperature = 18;
+        }
+
     }
 
     @Override
@@ -72,6 +90,11 @@ public class ThrottleSlider extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if(!dayUpdated){
+            dayUpdated = true;
+            new DayUpdater((Activity)getContext());
+        }
+
         float width = canvas.getWidth();
         float height = canvas.getHeight();
 
@@ -82,46 +105,81 @@ public class ThrottleSlider extends View {
         canvas.drawBitmap(b,0,(height/2 - b.getHeight()/2), p);
 
         p.setStyle(Paint.Style.FILL);
-        p.setColor(Color.RED);
+        p.setColor(Color.argb(210,200,200,200));
         canvas.drawRect(0,height/2 + handleY - handleHeight/2, handleWidth, height/2 + handleY + handleHeight/2,p);
 
+        changeTempTextView();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 
-        switch (e.getAction()){
-            case MotionEvent.ACTION_MOVE:
-                handleY = e.getY() - getHeight()/2;
-                currentChange = handleY / bheight * 2;
-                break;
-            case MotionEvent.ACTION_DOWN:
-                handleY = e.getY() - getHeight()/2;
-                currentChange = handleY / bheight * 2;
-                if (!tempChanging) {
-                    tempChanging = true;
-                    startThread();
-                }
+        if(e.getY() > 200) {
+            switch (e.getAction()) {
+                case MotionEvent.ACTION_MOVE:
+                    if(e.getY() > 150) {
+
+                        handleY = e.getY() - getHeight() / 2;
+                        if (!tempChanging) {
+                            tempChanging = true;
+                            startThread();
+                        }
+                        updateTouchHandle();
+                    }else{
+                        stoppedThread();
+                    }
+                    break;
+                case MotionEvent.ACTION_DOWN:
+                    handleY = e.getY() - getHeight() / 2;
+                    updateTouchHandle();
+                    if (!tempChanging) {
+                        tempChanging = true;
+                        startThread();
+                    }
 
 
-                break;
-            case MotionEvent.ACTION_UP:
+                    break;
+                case MotionEvent.ACTION_UP:
+                    resetTouchHandle();
+                    break;
+
+            }
+
+
+            if (handleY > bheight / 2)
+                handleY = bheight / 2;
+            if (handleY < -bheight / 2)
+                handleY = -bheight / 2;
+
+
+            invalidate();
+        }
+        return true;
+    }
+
+    private void updateTouchHandle(){
+        currentChange = -handleY / bheight * 2;
+
+        if(currentChange < -1){
+            currentChange = -1;
+        }else if(currentChange > 1){
+            currentChange = 1;
+        }
+    }
+
+    public void resetTouchHandle(){
+
+        ((Activity)getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 handleY = 0;
                 currentChange = handleY / bheight * 2;
-                break;
 
-        }
-
-
-
-            if(handleY > bheight / 2)
-                handleY = bheight/2;
-            if(handleY <  -bheight / 2)
-                handleY = -bheight/2;
+                invalidate();
+            }
+        });
 
 
-        invalidate();
-        return true;
     }
 
     public void startThread(){
@@ -135,7 +193,15 @@ public class ThrottleSlider extends View {
 
     public void stoppedThread(){
         tempChanging = false;
+        stopThreadPlease = true;
+        resetTouchHandle();
 
+        try {
+            HeatingSystem.put("weekProgramState", "off");
+            HeatingSystem.put("targetTemperature", String.format(java.util.Locale.US, "%.1f", sliderTemperature));
+        }catch(Exception e){
+            Log.d("ERROR", "stoppedThread: Could not put temperature" + e.getMessage());
+        }
         Log.d("DEBUG", "Thread isss " + tempChanging);
     }
 
@@ -152,5 +218,20 @@ public class ThrottleSlider extends View {
     public void addTemperature(float t){
         setTemperature(sliderTemperature + t);
         return;
+    }
+
+    public void changeTempTextView(){
+
+        final TextView temptext = (TextView) ((Activity)getContext()).findViewById(R.id.temperatureText);
+        if(temptext != null) {
+            ((Activity)getContext()).runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    String nview = String.format(java.util.Locale.US, "%.1f",sliderTemperature) + "°";
+                    temptext.setText(nview);
+                }
+            });
+        }
     }
 }

@@ -3,6 +3,7 @@
     package="com.a2id40group36.ayika.ayika">
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-sdk android:minSdkVersion="21"/>
     <application
 
         android:allowBackup="true"

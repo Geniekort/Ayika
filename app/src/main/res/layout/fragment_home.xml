@@ -14,6 +14,7 @@
         android:background="#000"
         android:layout_margin="12dp"
         android:scaleType="fitCenter"
+        android:id="@+id/helpme3"
         />
         <ImageButton
         android:layout_width="48dp"
@@ -52,10 +53,10 @@
 
     <com.a2id40group36.ayika.ayika.ThrottleSlider
         android:id="@+id/throttle"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="15dp"
         android:layout_alignParentRight="true"/>
-
 
 
 </RelativeLayout>

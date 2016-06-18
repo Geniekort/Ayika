@@ -27,7 +27,7 @@ public class ThrottleSlider extends View {
     private TemperatureChangeThread runnab;
     private Thread thr;
 
-    public boolean tempChanging, stopThreadPlease;
+    public boolean tempChanging, stopThreadPlease, dayUpdated = false;
     public float currentChange; // Should be a number between -1.0 and 1.0. Indicating the rate of change
 
     public Bitmap b;
@@ -90,6 +90,11 @@ public class ThrottleSlider extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if(!dayUpdated){
+            dayUpdated = true;
+            new DayUpdater((Activity)getContext());
+        }
+
         float width = canvas.getWidth();
         float height = canvas.getHeight();
 
@@ -113,7 +118,12 @@ public class ThrottleSlider extends View {
             switch (e.getAction()) {
                 case MotionEvent.ACTION_MOVE:
                     if(e.getY() > 150) {
+
                         handleY = e.getY() - getHeight() / 2;
+                        if (!tempChanging) {
+                            tempChanging = true;
+                            startThread();
+                        }
                         updateTouchHandle();
                     }else{
                         stoppedThread();

@@ -20,8 +20,8 @@ public class dayButtonHandeler implements View.OnClickListener {
     Button[] bs;
     boolean buttonsSet = false;
 
-    public dayButtonHandeler(Fragment f){
-        m = (MainActivity) f.getContext();
+    public dayButtonHandeler(MainActivity mo){
+        m = mo;
 
         bs = new Button[7];
     }

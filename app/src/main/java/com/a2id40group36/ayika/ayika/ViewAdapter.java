@@ -18,12 +18,12 @@ public class ViewAdapter extends FragmentPagerAdapter  {
     public Fragment getItem(int index) {
 
         switch (index) {
-            case 0:
+            case 1:
                 // Top Rated fragment activity
                 return new HomeActivity();
-            case 1:
-                return new WeekProgramActivity();
             case 2:
+                return new WeekProgramActivity();
+            case 0:
                 return new SettingsActivity();
         }
         return null;

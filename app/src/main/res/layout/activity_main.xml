@@ -12,8 +12,16 @@
     <com.a2id40group36.ayika.ayika.StopViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
     </com.a2id40group36.ayika.ayika.StopViewPager>
+
+    <com.a2id40group36.ayika.ayika.Indicator
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/indicator"
+        />
 
 <!--Changing-->
 

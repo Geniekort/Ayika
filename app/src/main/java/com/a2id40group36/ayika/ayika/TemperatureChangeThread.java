@@ -29,7 +29,13 @@ public class TemperatureChangeThread implements Runnable {
     @Override
     public void run() {
 
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         while(t.currentChange != 0 && !t.stopThreadPlease) {
+
 
             t.addTemperature(t.currentChange * RATEOFTEMPCHANGE);
 

@@ -627,6 +627,9 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
             }
 
             if(noNodeAdd){
+                if(t != null && t.getView().getWindowVisibility() == View.VISIBLE){
+                    t.cancel();
+                }
                 if(t == null || t.getView().getWindowVisibility() != View.VISIBLE){ // Only if toast was already invisible
                     t = Toast.makeText(m.getApplicationContext(), tooMuchNodesMsg, Toast.LENGTH_LONG);
                     t.show();
@@ -657,6 +660,9 @@ public class ScheduleView extends View implements GestureDetector.OnGestureListe
                 setAttachState(false);
                 if(thrDel){
                     thrDel = false;
+                    if(t != null && t.getView().getWindowVisibility() == View.VISIBLE){
+                        t.cancel();
+                    }
                     if(t == null || t.getView().getWindowVisibility() != View.VISIBLE) { // Only if toast was already invisible
                         Toast t = Toast.makeText(m.getApplicationContext(), nodeDeletedMsg, Toast.LENGTH_SHORT);
                         t.show();

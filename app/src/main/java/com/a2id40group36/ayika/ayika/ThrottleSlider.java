@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.thermostatapp.util.HeatingSystem;
 
@@ -22,12 +23,12 @@ import org.thermostatapp.util.HeatingSystem;
 public class ThrottleSlider extends View {
 
     public float sliderTemperature; // Between 5 - 30, is desired temperature
-
+    Toast t;
     private float handleY, handleWidth, handleHeight, bheight;
     private TemperatureChangeThread runnab;
     private Thread thr;
 
-    public boolean tempChanging, stopThreadPlease, dayUpdated = false;
+    public boolean tempChanging, stopThreadPlease, dayUpdated = false, activated = true;
     public float currentChange; // Should be a number between -1.0 and 1.0. Indicating the rate of change
 
     public Bitmap b;
@@ -98,7 +99,13 @@ public class ThrottleSlider extends View {
         float width = canvas.getWidth();
         float height = canvas.getHeight();
 
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.mipmap.backsll);
+
+        Bitmap b;
+        if(activated){
+            b =BitmapFactory.decodeResource(getResources(), R.mipmap.backsll);
+        }else{
+            b =BitmapFactory.decodeResource(getResources(), R.drawable.backsloff);
+        }
 
         Paint p = new Paint();
 
@@ -115,36 +122,44 @@ public class ThrottleSlider extends View {
     public boolean onTouchEvent(MotionEvent e) {
 
         if(e.getY() > 200) {
-            switch (e.getAction()) {
-                case MotionEvent.ACTION_MOVE:
-                    if(e.getY() > 150) {
+            if(activated) {
+                switch (e.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        if (e.getY() > 150) {
 
+                            handleY = e.getY() - getHeight() / 2;
+                            if (!tempChanging) {
+                                tempChanging = true;
+                                startThread();
+                            }
+                            updateTouchHandle();
+                        } else {
+                            stoppedThread();
+                        }
+                        break;
+                    case MotionEvent.ACTION_DOWN:
                         handleY = e.getY() - getHeight() / 2;
+                        updateTouchHandle();
                         if (!tempChanging) {
                             tempChanging = true;
                             startThread();
                         }
-                        updateTouchHandle();
-                    }else{
-                        stoppedThread();
-                    }
-                    break;
-                case MotionEvent.ACTION_DOWN:
-                    handleY = e.getY() - getHeight() / 2;
-                    updateTouchHandle();
-                    if (!tempChanging) {
-                        tempChanging = true;
-                        startThread();
-                    }
 
 
-                    break;
-                case MotionEvent.ACTION_UP:
-                    resetTouchHandle();
-                    break;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        resetTouchHandle();
+                        break;
 
+                }
+            }else{
+                if(t != null && t.getView().getVisibility() == VISIBLE){
+                    t.cancel();
+                }
+                t = Toast.makeText(getContext(), "Sorry, you can not use the slider since the vacation mode is on." +
+                        "Please first disable the vacation mode.", Toast.LENGTH_LONG);
+                t.show();
             }
-
 
             if (handleY > bheight / 2)
                 handleY = bheight / 2;

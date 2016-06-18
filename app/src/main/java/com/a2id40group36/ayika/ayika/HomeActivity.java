@@ -6,12 +6,14 @@ package com.a2id40group36.ayika.ayika;
 
 import com.a2id40group36.ayika.ayika.R;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.thermostatapp.util.HeatingSystem;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -31,6 +35,7 @@ public class HomeActivity extends Fragment implements View.OnClickListener {
     public static String currentDateTimeString = "";
     View rootView;
 
+    Toast t;
     public boolean holiday = false;
 
 
@@ -80,13 +85,69 @@ public class HomeActivity extends Fragment implements View.OnClickListener {
 
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if(v.getId() == R.id.holidaybutton){
-            holiday = !holiday;
-            Toast t = Toast.makeText(v.getRootView().getContext(), "Holiday is " + holiday, Toast.LENGTH_SHORT);
-            t.show();
-            Bitmap bb = BitmapFactory.decodeResource(getResources(), R.drawable.helpblack);
-            ((ImageButton) v).setImageBitmap(bb);
+            new AlertDialog.Builder(v.getContext())
+                    .setTitle("Vacation mode " + (!holiday ? "on" : "off") + "?")
+                    .setMessage("Do you really want to put the vacation mode " + (holiday ?
+                            "off? This will cause the thermostat to follow the schedule again, and also listen to the slider again. "
+                            : "on? This will cause the thermostat to stop following the schedule, and " +
+                            "the thermostat will not respond to the slider anymore."))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                            setVacationMode(!holiday);
+
+                            putVacationMode(holiday);
+
+                            Bitmap bb;
+                            if(holiday){
+                                bb = BitmapFactory.decodeResource(getResources(), R.drawable.airplanetakeoff);
+                            }else{
+                                bb = BitmapFactory.decodeResource(getResources(), R.drawable.airplanedown);
+                            }
+
+                            ((ImageButton) v).setImageBitmap(bb);
+
+                            if(t != null && t.getView().getWindowVisibility() == View.VISIBLE){
+                                t.cancel();
+                            }
+                            t = Toast.makeText(v.getRootView().getContext(), "Vacation mode is put " + (holiday ? "on" : "off") + "!", Toast.LENGTH_SHORT);
+                            t.show();
+
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+
+
+
+
         }
+    }
+
+    public void putVacationMode(final boolean b){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (b) {
+                        HeatingSystem.put("weekProgramState", "off");
+                    } else {
+                        HeatingSystem.put("weekProgramState", "on");
+                    }
+                }catch(Exception e){
+                    Log.d("Error", e.getMessage());
+                }
+            }
+        }).start();
+
+    }
+
+    public void setVacationMode(boolean b){
+        holiday = b;
+
+        ((ThrottleSlider)getActivity().findViewById(R.id.throttle)).activated = !b;
+        ((ThrottleSlider)getActivity().findViewById(R.id.throttle)).invalidate();
     }
 }

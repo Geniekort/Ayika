@@ -25,17 +25,12 @@ public class HelpHome extends ImageButton implements View.OnClickListener {
             "The maximal temperature that can be reached by the thermostat is 30 degrees Celsius and the lowest it can reach is 5 degrees celsius.\n";
     Canvas canvas;
     Bitmap BL;
-    HomeActivity home;
-    String day;
     ImageButton helpSettings = (ImageButton) findViewById(R.id.helpme3);
-    // ImageButton helpSchedule = (ImageButton) findViewById(R.id.helpme);
-    // ImageButton helpHome = (ImageButton) findViewById(R.id.helpme);
     private MainActivity m;
 
 
 
 
-    //   public int counter =23;
     TextView showText;
     private Paint paint_Luttik = new Paint();
 

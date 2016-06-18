@@ -71,7 +71,7 @@ public class CustomsSettings extends View implements View.OnClickListener{
         paint_luttik.setTextSize(40);
         paint_bluttik.setColor(Color.WHITE);
         paint_bluttik.setTextSize(120);
-       // onClick(v);
+        // onClick(v);
 
 
 
@@ -80,14 +80,14 @@ public class CustomsSettings extends View implements View.OnClickListener{
 
     public void onDraw(Canvas canvas){
         this.canvas=canvas;
-      //  filters[0] = new InputFilter.LengthFilter(10); //Filter to 10 characters
-      //  text.setFilters(filters);
+        //  filters[0] = new InputFilter.LengthFilter(10); //Filter to 10 characters
+        //  text.setFilters(filters);
 
         canvas.drawText("Server address:",50, 180, paint_luttik);
-        canvas.drawRect(50,190,600, 260,paint_luttik);
+        // canvas.drawRect(50,190,600, 260,paint_luttik);
         canvas.drawText("Settings",140, 120, paint_bluttik);
         canvas.drawLine(30,300,750, 300, paint_bluttik);
-        canvas.drawRect(50,430,420, 480,paint_luttik);
+        // canvas.drawRect(50,430,420, 480,paint_luttik);
         canvas.drawText("Vacation Mode Temperature:",50, 400, paint_luttik);
 
         super.onDraw(canvas);

@@ -48,7 +48,7 @@
         android:background="#000"
         android:layout_margin="12dp"
         android:scaleType="fitCenter"
-        android:id="@+id/helpme3"
+        android:id="@+id/helpme"
         />
 
     <Button

@@ -68,6 +68,7 @@ public class CustomTEMP extends View {
       //  canvas.drawText(CustomVS.counter + "°", 230, 270, paint_TEMP);
         canvas.drawText(CustomVS.mTrick+ "°", 230, 270, paint_TEMP);
 
+
         invalidate();
 
 

@@ -7,12 +7,60 @@
     <TextView android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Settingspage"
+
         android:textSize="20dp"
         android:layout_centerInParent="true"
         android:id="@+id/textView"
         style="@style/TextColor"/>
+    <com.a2id40group36.ayika.ayika.CustomsSettings
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/server"
+        android:hint="Enter Server Number"
+        android:layout_marginTop="88dp"
+        android:layout_marginLeft="34dp"
+        android:inputType="number"
+        android:maxLength="30"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vmode"
+        android:hint="V-temperature"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="200dp"
+        android:inputType="number"
+        />
+
+    <com.a2id40group36.ayika.ayika.CustomButtons
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/helpblack"
+        android:id="@+id/helpme"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/black"
+        android:maxLength="2"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/savebutton"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/helpme"
+        android:layout_toStartOf="@+id/helpme"
+        android:layout_marginBottom="91dp" />
 
 
 </RelativeLayout>

@@ -124,6 +124,18 @@
 
         />
 
+   <com.a2id40group36.ayika.ayika.HelpHome
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:src="@drawable/helpblack"
+       android:background="@android:color/black"
+       android:id="@+id/helpme3"
+       android:layout_alignTop="@+id/imageButton3"
+       android:layout_alignLeft="@+id/imageButton3"
+       android:layout_alignStart="@+id/imageButton3" />
+
+
+
 
 
 

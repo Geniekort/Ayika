@@ -83,12 +83,16 @@ public class CustomVS extends SeekBar {
 
         if((i<=300)&&(i>=50))
         {
-        mCount = (i * 0.1f);
-        mTrick = String.format("%.1f", mCount);
+            mCount = (i * 0.1f);
+            mTrick = String.format("%.1f", mCount);
+            LuttikLemma();
+
         }
 
+
+
         decimalFormat = new DecimalFormat("##.#");
-        LuttikLemma();
+
 
 
         if (!isEnabled()) {
@@ -124,6 +128,18 @@ public class CustomVS extends SeekBar {
 
     public void LuttikLemma() {
 
+        if((i>150) && (i<250)){
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    mCount = (i * 0.1f)+1;
+                    mTrick = String.format("%.1f", mCount);
+                }
+            }, 100);
+
+        }
 
     }
 

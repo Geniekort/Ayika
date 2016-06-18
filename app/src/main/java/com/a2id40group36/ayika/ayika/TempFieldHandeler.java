@@ -12,7 +12,7 @@ import org.thermostatapp.util.InvalidInputValueException;
 /**
  * Created by D Kortleven on 16/06/2016.
  */
-public class TempFieldHandeler implements TextWatcher {
+public class TempFieldHandeler implements View.OnFocusChangeListener{
 
     int type; //0 = nightTemp, 1 = dayTemp
     final EditText v;
@@ -55,31 +55,8 @@ public class TempFieldHandeler implements TextWatcher {
             }
         }).start();
     }
+    private void updateDayTemp(Float s) {
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(final CharSequence s, int start, int before, int count) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                switch (type) {
-                    case 0:
-                        updateNightTemp(s);
-                        break;
-                    case 1:
-                        updateDayTemp(s);
-                        break;
-                }
-            }
-        }).start();
-
-    }
-
-    private void updateDayTemp(CharSequence s) {
         Log.d("DEBUG", "Day Changed: " + s);
         try {
             HeatingSystem.put("dayTemperature", s.toString());
@@ -88,7 +65,7 @@ public class TempFieldHandeler implements TextWatcher {
         }
     }
 
-    private void updateNightTemp(CharSequence s){
+    private void updateNightTemp(Float s){
         Log.d("DEBUG", "Night Changed: " + s);
 
         try {
@@ -98,9 +75,38 @@ public class TempFieldHandeler implements TextWatcher {
         }
     }
 
-    @Override
-    public void afterTextChanged(Editable s) {
+    // Returns the value if it is in the range 5 - 30, or change to closest bound if possible
+    public float formatAndInRange(float in){
+        if(in < 5){
+            return 5;
+        }
+        if(in > 30){
+            return 30;
+        }
+        return 18;
+    }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus){
+            final float t = formatAndInRange(Float.parseFloat(((EditText)v).getText().toString()));
+            ((EditText) v).setText(Float.toString(t));
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    switch (type) {
+                        case 0:
+                            updateNightTemp(t);
+                            break;
+                        case 1:
+                            updateDayTemp(t);
+                            break;
+                    }
+                }
+            }).start();
+
+        }
 
     }
 }

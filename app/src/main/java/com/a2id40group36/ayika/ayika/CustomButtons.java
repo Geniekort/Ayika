@@ -27,8 +27,8 @@ public class CustomButtons extends ImageButton implements View.OnClickListener {
     HomeActivity home;
     String day;
     ImageButton helpSettings = (ImageButton) findViewById(R.id.helpme);
-   // ImageButton helpSchedule = (ImageButton) findViewById(R.id.helpme);
-   // ImageButton helpHome = (ImageButton) findViewById(R.id.helpme);
+    // ImageButton helpSchedule = (ImageButton) findViewById(R.id.helpme);
+    // ImageButton helpHome = (ImageButton) findViewById(R.id.helpme);
 
     public String DJBASLUTTIK = "VaccationMode On!";
     public String DJBASLUTTIK2 = "VaccationMode OFF!";
@@ -94,23 +94,23 @@ public class CustomButtons extends ImageButton implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
-                    m = (MainActivity) getContext();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(m);
-                    builder.setMessage(help1)
-                            .setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setTitle("Help")
-                            .create();
-                    //set the view of the AlertDialog
+                m = (MainActivity) getContext();
+                AlertDialog.Builder builder = new AlertDialog.Builder(m);
+                builder.setMessage(help1)
+                        .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setTitle("Help")
+                        .create();
+                //set the view of the AlertDialog
 
-                    //    onClick(view);
-                    //  AlertDialog dialog = builder.create();
-                    builder.show();
-                }
+                //    onClick(view);
+                //  AlertDialog dialog = builder.create();
+                builder.show();
+            }
 
 
         });

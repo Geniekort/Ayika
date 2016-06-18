@@ -27,7 +27,6 @@ public class WeekProgramActivity extends Fragment {
 
 
         d = new dayButtonHandeler(this);
-
         rootView.findViewById(R.id.buttonmo).setOnClickListener(d);
         rootView.findViewById(R.id.buttontu).setOnClickListener(d);
         rootView.findViewById(R.id.buttonwe).setOnClickListener(d);

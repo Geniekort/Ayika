@@ -12,10 +12,7 @@
         android:layout_centerInParent="true"
         android:id="@+id/textView"
         style="@style/TextColor"/>
-    <com.a2id40group36.ayika.ayika.CustomsSettings
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
 
 
 
@@ -24,10 +21,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/server"
         android:hint="Enter Server Number"
-        android:layout_marginTop="88dp"
-        android:layout_marginLeft="34dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginLeft="30dp"
         android:inputType="number"
         android:maxLength="30"
+        android:background="@android:color/white"
         />
 
     <EditText
@@ -35,11 +33,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/vmode"
         android:hint="V-temperature"
-        android:layout_marginLeft="18dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="200dp"
         android:inputType="number"
-        />
+        android:background="@android:color/white"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="30dp"
+
+        android:layout_marginBottom="21dp" />
 
     <com.a2id40group36.ayika.ayika.CustomButtons
         android:layout_width="wrap_content"
@@ -57,10 +56,17 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/savebutton"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/helpme"
-        android:layout_toStartOf="@+id/helpme"
-        android:layout_marginBottom="91dp" />
+        android:layout_marginLeft="230dp"
+        android:layout_marginTop="400dp"/>
+
+    <com.a2id40group36.ayika.ayika.CustomsSettings
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 
 
 </RelativeLayout>

@@ -26,7 +26,7 @@ public class CustomButtons extends ImageButton implements View.OnClickListener {
     Bitmap BL;
     HomeActivity home;
     String day;
-    ImageButton helpSettings = (ImageButton) findViewById(R.id.helpme);
+    ImageButton helpSettings = (ImageButton) findViewById(R.id.settingshelp);
     // ImageButton helpSchedule = (ImageButton) findViewById(R.id.helpme);
     // ImageButton helpHome = (ImageButton) findViewById(R.id.helpme);
 
